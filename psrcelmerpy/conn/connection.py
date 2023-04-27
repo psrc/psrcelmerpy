@@ -6,11 +6,12 @@ def build_conn(database_name):
     try:
         driver_name = 'ODBC Driver 17 for SQL Server'
         server_name = 'AWS-PROD-SQL\Sockeye'
-        conn_string = "DRIVER={{}}; SERVER={}; DATABASE={}; trusted_connection=yes".format(
+        conn_string = "DRIVER={}; SERVER={}; DATABASE={}; trusted_connection=yes".format(
             driver_name,
             server_name,
             database_name
             )
+        print(conn_string)
         sqlconn = pyodbc.connect(conn_string)
         return(sqlconn)
     

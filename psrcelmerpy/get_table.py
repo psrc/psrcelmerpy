@@ -1,4 +1,5 @@
-from . import conn
+from .conn.connection import get_conn
+import pandas as pd
 
 def get_table(schema, table_name, db_name='Elmer'):
     """
@@ -21,9 +22,11 @@ def get_table(schema, table_name, db_name='Elmer'):
         A data frame representation of the table db_name.schema.table_name 
     """
     try:
-       conn = conn.get_conn(db_name)
+       conn = get_conn(db_name)
        sql = "select * from {}.{}".format(schema, table_name)
-       df = pd.read_sql(sql, con=conn)
+       print(sql)
+       df = pd.read_sql(sql=sql, con=conn)
+       return(df)
        
     except Exception as e:
         print(e.args[0])
