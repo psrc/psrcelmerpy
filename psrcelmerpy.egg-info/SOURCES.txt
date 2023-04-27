@@ -1,0 +1,11 @@
+setup.py
+psrcelmerpy/__init__.py
+psrcelmerpy/get_table.py
+psrcelmerpy.egg-info/PKG-INFO
+psrcelmerpy.egg-info/SOURCES.txt
+psrcelmerpy.egg-info/dependency_links.txt
+psrcelmerpy.egg-info/requires.txt
+psrcelmerpy.egg-info/top_level.txt
+psrcelmerpy/conn/__init__.py
+psrcelmerpy/conn/auth.py
+psrcelmerpy/conn/connection.py
