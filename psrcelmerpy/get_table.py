@@ -26,8 +26,9 @@ def get_table(schema, table_name, db_name='Elmer'):
        sql = "select * from {}.{}".format(schema, table_name)
        print(sql)
        df = pd.read_sql(sql=sql, con=conn)
+       conn.close()
        return(df)
        
     except Exception as e:
-        print(e.args[0])
+        print("An error happened in get_table(): {}".format(e.args[0]))
         raise

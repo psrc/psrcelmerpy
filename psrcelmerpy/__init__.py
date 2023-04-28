@@ -1,2 +1,2 @@
 from . import conn
-from .get_table import get_table
+from .main import (get_query, get_table, list_recordsets)

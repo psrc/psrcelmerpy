@@ -1,5 +1,5 @@
 from . import auth
-import pyodbc
+import sqlalchemy
 
 
 def build_conn(database_name):
@@ -11,9 +11,8 @@ def build_conn(database_name):
             server_name,
             database_name
             )
-        print(conn_string)
-        sqlconn = pyodbc.connect(conn_string)
-        return(sqlconn)
+        engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % conn_string)
+        return(engine)
     
     except Exception as e:
         print(e.args[0])
