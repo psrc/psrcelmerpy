@@ -95,11 +95,22 @@ def list_recordsets(schema_name='', include_base_tables=False, db_name='Elmer'):
     try:
         conn = get_conn(db_name)
         sql = build_recordset_sql(schema_name, include_base_tables)
-        #print(sql)
         df = select_data(sql=sql, conn=conn)
         conn.dispose()
         return(df)
         
+    except Exception as e:
+        print("An error happened in list_recordsets(): {}".format(e.args[0]))
+        raise
+
+
+def sql_execute(sql, db_name="Elmer"):
+    try:
+        conn = get_conn(db_name)
+        conn.execute(sql)
+        #conn.commit()
+        conn.dispose()
+
     except Exception as e:
         print("An error happened in list_recordsets(): {}".format(e.args[0]))
         raise

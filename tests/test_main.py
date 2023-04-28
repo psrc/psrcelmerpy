@@ -1,4 +1,5 @@
-from psrcelmerpy.main import (get_table, get_query, list_recordsets)
+from psrcelmerpy.main import (get_table, get_query, list_recordsets, sql_execute)
+from datetime import datetime
 import pandas as pd
 
 def test_get_table():
@@ -16,3 +17,14 @@ def test_list_recordsets():
     df = list_recordsets(schema_name='HHSurvey')
     assert isinstance(df, pd.DataFrame) == True
     assert len(df) > 2
+
+def test_sql_execute():
+    thisdate = datetime.today().strftime('%Y_%m_%d')
+    tblname = 'stg.test_tbl_psrcelmerpy_' + thisdate
+    sql_execute('drop table if exists {}'.format(tblname))
+    sql_execute('create table {} (FieldA varchar(10))'.format(tblname))
+    sql_execute("insert into {} (FieldA) values ('foo')".format(tblname))
+    df = get_table(schema='stg', table_name='test_tbl_psrcelmerpy_' + thisdate)
+    assert isinstance(df, pd.DataFrame) == True
+    assert len(df) == 1
+    sql_execute('drop table if exists {}'.format(tblname))
