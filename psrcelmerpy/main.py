@@ -33,7 +33,7 @@ def get_query(sql, db_name='Elmer'):
     try:
        conn = get_conn(db_name)
        df = select_data(sql, conn)
-       conn.close()
+       conn.dispose()
        return(df)
        
     except Exception as e:
@@ -65,7 +65,7 @@ def get_table(schema, table_name, db_name='Elmer'):
        conn = get_conn(db_name)
        sql = "select * from {}.{}".format(schema, table_name)
        df = select_data(sql, conn)
-       conn.close()
+       conn.dispose()
        return(df)
        
     except Exception as e:
@@ -98,7 +98,6 @@ def list_recordsets(schema_name='', include_base_tables=False, db_name='Elmer'):
         #print(sql)
         df = select_data(sql=sql, conn=conn)
         conn.dispose()
-        #conn.close()
         return(df)
         
     except Exception as e:
