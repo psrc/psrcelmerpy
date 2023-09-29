@@ -1,6 +1,7 @@
 setup.py
 psrcelmerpy/__init__.py
 psrcelmerpy/get_table.py
+psrcelmerpy/main.py
 psrcelmerpy.egg-info/PKG-INFO
 psrcelmerpy.egg-info/SOURCES.txt
 psrcelmerpy.egg-info/dependency_links.txt

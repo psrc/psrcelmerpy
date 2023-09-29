@@ -30,7 +30,7 @@ def get_conn(database_name):
     Returns
     -------
     conn
-        A read-only connection to the database
+        A read-only SQLAlchemy connection to the database
     """
     try:
         conn = build_conn(database_name)
