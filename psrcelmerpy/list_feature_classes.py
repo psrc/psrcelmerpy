@@ -80,7 +80,9 @@ def build_fc_query(feature_dataset='', feature_class=''):
         "	and o_types.[name] = 'Feature Dataset' ")
         sql += feature_class_filter
         sql += feature_dataset_filter
-        sql += " order by o.[Name] d.[name]"
+        sql += " order by o.[Name], d.[name]"
+        print("feature_dataset_filter: {}".format(feature_dataset_filter))
+        print(sql)
         return(sql)
 
     except Exception as e:
@@ -106,7 +108,7 @@ def list_feature_classes(feature_dataset='', feature_class=''):
     """
     try:
         conn = get_conn('ElmerGeo')
-        sql = build_fc_query(feature_dataset='', feature_class='')
+        sql = build_fc_query(feature_dataset=feature_dataset, feature_class=feature_class)
         df = select_data(sql=sql, conn=conn)
         conn.dispose()
         return(df)
