@@ -10,7 +10,7 @@ def select_data(sql, conn):
     sql : str
         a select query to be executed against the database specified by conn
         
-    conn : SQLAlchemy connectable, str, or sqlite3 connection
+    conn : SQLAlchemy connectable str, or sqlite3 connection
         
 
     Returns
@@ -18,6 +18,7 @@ def select_data(sql, conn):
     df : a pandas dataframe
     """
     try:
+        print("SQL: {}".format(sql))
         df = pd.read_sql(sql=sql, con=conn)
         return(df)
 
