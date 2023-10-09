@@ -1,5 +1,7 @@
 from .main import get_conn, select_data
+import pandas as pd
 import geopandas as gpd
+from shapely import wkt
 
 def build_sql(schema_name, tbl_name, conn):
     """Build a SQL query to select all the columns in table or view {schema_name}.{tbl_name}.
@@ -41,12 +43,12 @@ def build_sql(schema_name, tbl_name, conn):
                     "and c.DATA_TYPE in ('geometry', 'geography')",
                     "and c.COLUMN_NAME not in ('GDB_GEOMATTR_DATA')"
                     )
-        sf_col_name_sql = ' '.join(s_col_name_sql)
+        s_col_name_sql = ' '.join(s_col_name_sql)
         s_col_df = select_data(s_col_name_sql, conn)
         col_names_s = ', '.join(s_col_df['Column_Name'])
         ret_str = "SELECT  {col_names_ns}, {col_names_s} FROM {schema_name}.{tbl_name}".format(
-            col_name_ns=col_names_ns,
-            col_name_s=col_names_s,
+            col_names_ns=col_names_ns,
+            col_names_s=col_names_s,
             schema_name=schema_name,
             tbl_name=tbl_name
         )
@@ -138,6 +140,24 @@ def reproject_gdf(gdf, out_epsg):
         print("An error happened in reproject_gdf(): {}".format(e.args[0]))
         raise
 
+
+def sql_to_gdf(sql, conn):
+    """Create a geodataframe from a SQL query
+    
+    The SQL must define a Shape column that is a WKT representation of a geometry data type
+    
+    """
+    try: 
+        df = pd.read_sql(sql, conn)
+        df['geometry'] = df['Shape'].apply(wkt.loads)
+        gdf = gpd.GeoDataFrame(df, geometry='geometry')
+        return(gdf)
+
+    
+    except Exception as e:
+        print("An error happened in sql_to_gdf(): {}".format(e.args[0]))
+        raise
+
 def read_elmergeo(layer_name, schema_name='dbo', project_to_wgs84=True):
     """ create a geodataframe from a layer in PSRC's in-house geodatabase.
 
@@ -173,9 +193,10 @@ def read_elmergeo(layer_name, schema_name='dbo', project_to_wgs84=True):
                              tbl_name=tbl_name,
                              conn=conn)
         crs='EPSG:2285'
-        gdf = gpd.read_postgis(layer_sql, conn, geom_col="Shape", crs=crs)
+        gdf = sql_to_gdf(layer_sql, conn)
+        gdf = gdf.set_crs(crs)
         if project_to_wgs84:
-            gdf.to_crs(epsg='EPSG:4326', inplace=True)
+            gdf.to_crs('EPSG:4326', inplace=True)
         return(gdf)
 
     except Exception as e:
