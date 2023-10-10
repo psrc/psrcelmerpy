@@ -18,7 +18,6 @@ def select_data(sql, conn):
     df : a pandas dataframe
     """
     try:
-        print("SQL: {}".format(sql))
         df = pd.read_sql(sql=sql, con=conn)
         return(df)
 

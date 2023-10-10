@@ -81,8 +81,7 @@ def build_fc_query(feature_dataset='', feature_class=''):
         sql += feature_class_filter
         sql += feature_dataset_filter
         sql += " order by o.[Name], d.[name]"
-        print("feature_dataset_filter: {}".format(feature_dataset_filter))
-        print(sql)
+        sql = "".join(sql)
         return(sql)
 
     except Exception as e:
