@@ -49,17 +49,19 @@ def build_feature_dataset_filter(feature_dataset = ''):
 
 
 def build_fc_query(feature_dataset='', feature_class=''):
-    """
+    """Build a query to list feature classes in a geodatabase.
 
     Parameters
     ----------
     feature_dataset : str
-         (Default value = '')
+         If supplied, the feature dataset to filter the results by (Default value = '')
     feature_class : str
-         (Default value = '')
+         If supplied, the feature class name to filter the results by (Default value = '')
 
     Returns
     -------
+    sql : str
+        A SQL query that can be run against a geodatabase
 
     """
     try:

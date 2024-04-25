@@ -52,33 +52,33 @@ def get_query(sql, db_name='Elmer'):
         raise
 
 
-def get_table(schema, tbl_name, db_name='Elmer'):
-    """Return a table or view from a database.
+# def get_table(schema, tbl_name, db_name='Elmer'):
+#     """Return a table or view from a database.
 
-    Parameters
-    ----------
-    schema : str
-        The schema that the table or view lives in.
-    tbl_name : str
-        The name of the table or view that you wish to retrieve
-    db_name : str
-        The name of the database you are pulling from.  Defaults to 'Elmer'
+#     Parameters
+#     ----------
+#     schema : str
+#         The schema that the table or view lives in.
+#     tbl_name : str
+#         The name of the table or view that you wish to retrieve
+#     db_name : str
+#         The name of the database you are pulling from.  Defaults to 'Elmer'
 
-    Returns
-    -------
-    df : A pandas data frame
+#     Returns
+#     -------
+#     df : A pandas data frame
     
-    """
-    try:
-       conn = get_conn(db_name)
-       sql = "select * from {}.{}".format(schema, tbl_name)
-       df = select_data(sql, conn)
-       conn.dispose()
-       return(df)
+#     """
+#     try:
+#        conn = get_conn(db_name)
+#        sql = "select * from {}.{}".format(schema, tbl_name)
+#        df = select_data(sql, conn)
+#        conn.dispose()
+#        return(df)
        
-    except Exception as e:
-        print("An error happened in get_table(): {}".format(e.args[0]))
-        raise
+#     except Exception as e:
+#         print("An error happened in get_table(): {}".format(e.args[0]))
+#         raise
 
 
 def build_recordset_sql(schema_name, include_base_tables=False):

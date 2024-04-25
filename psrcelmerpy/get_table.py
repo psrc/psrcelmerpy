@@ -26,7 +26,7 @@ def get_table(schema, table_name, db_name='Elmer'):
        sql = "select * from {}.{}".format(schema, table_name)
        print(sql)
        df = pd.read_sql(sql=sql, con=conn)
-       conn.close()
+       conn.dispose()
        return(df)
        
     except Exception as e:
