@@ -1,2 +1,3 @@
-from . import connection
-from .connection import get_conn
+#from .connection import Connection
+from .elmer_conn import ElmerConn
+from .elmergeo_conn import ElmerGeoConn
