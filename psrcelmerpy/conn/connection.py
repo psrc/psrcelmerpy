@@ -98,7 +98,6 @@ class Connection:
             sql = "select * from {}.{}".format(schema, table_name)
             print(sql)
             df = pd.read_sql(sql=sql, con=engine)
-            # engine.dispose()
             return(df)
         
         except Exception as e:
