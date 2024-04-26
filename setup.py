@@ -8,7 +8,7 @@ setup(
     name="psrcelmerpy",
     packages=find_packages(include=["psrcelmerpy", "psrcelmerpy.*"]),
     version="0.1.0",
-    install_requires=['pandas>=1.5',
+    install_requires=['pandas',
                       #'scipy==1.10.1',
                       'pyodbc',
                       'sqlalchemy',
