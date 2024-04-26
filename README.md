@@ -1,6 +1,12 @@
 # psrcelmerpy: 
 ### *make database connections easier*
 
+## Installation
+Install with:
+```python
+pip install git+https://github.com/psrc/psrcelmerpy.git
+```
+
 ## Examples
 
 ### Establish a connection to Elmer
