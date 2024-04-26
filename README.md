@@ -1,5 +1,5 @@
 # psrcelmerpy: 
-### *making database connections easier*
+### *make database connections easier*
 
 ## Examples
 
