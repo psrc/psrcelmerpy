@@ -10,5 +10,7 @@ setup(
     version="0.1.0",
     install_requires=['pandas>=1.5',
                       'scipy==1.10.1',
-                      'sqlalchemy']
+                      'sqlalchemy',
+                      'geopandas',
+                      'shapely']
 )
