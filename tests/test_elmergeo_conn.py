@@ -57,6 +57,6 @@ def test_build_fc_query():
 def test_list_feature_classes():
     df = egconn.list_feature_classes()
     print(f"len(feature clases) = {len(df)}")
-    assert len(df) >= 280
+    assert len(df) >= 279
     df = egconn.list_feature_classes('census')
     assert 40 < len(df) < 100

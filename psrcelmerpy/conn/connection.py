@@ -17,7 +17,7 @@ class Connection:
     def create_engine(self):
         try:
             self.driver_name = 'ODBC Driver 17 for SQL Server'
-            self.server_name = 'AWS-PROD-SQL\Sockeye'
+            self.server_name = r'AWS-PROD-SQL\Sockeye'
             conn_string = "DRIVER={}; SERVER={}; DATABASE={}; trusted_connection=yes".format(
                 self.driver_name,
                 self.server_name,
@@ -97,7 +97,7 @@ class Connection:
             engine = self.engine
             sql = "select * from {}.{}".format(schema, table_name)
             print(sql)
-            df = pd.read_sql(sql=sql, con=engine)
+            df = self.get_query(sql)
             return(df)
         
         except Exception as e:

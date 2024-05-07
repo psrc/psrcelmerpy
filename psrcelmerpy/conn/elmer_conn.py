@@ -50,7 +50,7 @@ class ElmerConn(Connection):
             engine = self.engine
             query = self.build_recordset_sql(schema_name = schema_name, 
                                              include_base_tables=include_base_tables)
-            df = pd.read_sql(sql=query, con=engine)
+            df = self.get_query(query)
             return(df)
         
         except Exception as e:
