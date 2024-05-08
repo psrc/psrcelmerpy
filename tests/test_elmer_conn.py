@@ -4,6 +4,7 @@
 import psrcelmerpy
 from datetime import datetime
 import pandas as pd
+from pytest import raises
 
 def test_get_table():
     econn = psrcelmerpy.ElmerConn()
@@ -61,3 +62,9 @@ def test_build_recordset_sql():
     valid_query = " ".join(valid_query)
     test_query = econn._build_recordset_sql(schema_name='someschema')
     assert valid_query == test_query  
+
+def test_elmer_conn_database_name_setter_error():
+    con = psrcelmerpy.ElmerConn()
+    with raises(ValueError) as exc_info:
+        con.database_name=1
+    assert str(exc_info.value) == "database_name must be a string"

@@ -6,7 +6,7 @@ class Connection:
 
     def __init__(self, database_name):
         try:
-            #self._database_name = database_name
+            self._database_name = database_name
             self._create_engine()
         
         except Exception as e:
@@ -16,9 +16,6 @@ class Connection:
     @property
     def database_name(self):
         try:
-            print("I'm in property database_name")
-            if self._database_name == 'Elmer':
-                print(f"The value of _database_name is {self._database_name}")
             return self._database_name
 
         except Exception as e:
@@ -28,12 +25,13 @@ class Connection:
     @database_name.setter
     def database_name(self, value):
         try:
+            if not isinstance(value, str):
+                raise ValueError("database_name must be a string")
             self._database_name = value
 
         except Exception as e:
             print(e.args[0])
             raise
-        
 
     def _create_engine(self):
         try:
