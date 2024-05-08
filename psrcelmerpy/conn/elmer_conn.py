@@ -9,13 +9,13 @@ class ElmerConn(Connection):
         """
         try:
             self.database_name = 'Elmer'
-            self.create_engine()
+            self._create_engine()
         
         except Exception as e:
             print(e.args[0])
             raise
 
-    def build_recordset_sql(self, schema_name='', include_base_tables = False):
+    def _build_recordset_sql(self, schema_name='', include_base_tables = False):
         try: 
             base_query = ("SELECT t.TABLE_SCHEMA as [schema],",
                         "t.TABLE_NAME as recordset_name,",
@@ -33,7 +33,7 @@ class ElmerConn(Connection):
                 
 
         except Exception as e:
-            print("An error happened in build_recordset_sql(): {}".format(e.args[0]))
+            print("An error happened in _build_recordset_sql(): {}".format(e.args[0]))
             raise
 
 
@@ -48,7 +48,7 @@ class ElmerConn(Connection):
         """
         try:
             engine = self.engine
-            query = self.build_recordset_sql(schema_name = schema_name, 
+            query = self._build_recordset_sql(schema_name = schema_name, 
                                              include_base_tables=include_base_tables)
             df = self.get_query(query)
             return(df)

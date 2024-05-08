@@ -7,14 +7,14 @@ class Connection:
     def __init__(self, database_name):
         try:
             self.database_name = database_name
-            self.create_engine()
+            self._create_engine()
         
         except Exception as e:
             print(e.args[0])
             raise
     
 
-    def create_engine(self):
+    def _create_engine(self):
         try:
             self.driver_name = 'ODBC Driver 17 for SQL Server'
             self.server_name = r'AWS-PROD-SQL\Sockeye'

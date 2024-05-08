@@ -48,7 +48,7 @@ def test_build_recordset_sql():
                 "WHERE table_schema not in ('dbo', 'tSQLt', 'DBA', 'meta', 'stg')",
                 "AND t.TABLE_TYPE = 'view'")
     valid_query = " ".join(valid_query)
-    test_query = econn.build_recordset_sql()
+    test_query = econn._build_recordset_sql()
     assert valid_query == test_query  
     valid_query = f"{valid_query} AND t.TABLE_SCHEMA = 'someschema'"
     valid_query = ("SELECT t.TABLE_SCHEMA as [schema],",
@@ -59,5 +59,5 @@ def test_build_recordset_sql():
                 "AND t.TABLE_SCHEMA = 'someschema'",
                 "AND t.TABLE_TYPE = 'view'")
     valid_query = " ".join(valid_query)
-    test_query = econn.build_recordset_sql(schema_name='someschema')
+    test_query = econn._build_recordset_sql(schema_name='someschema')
     assert valid_query == test_query  
