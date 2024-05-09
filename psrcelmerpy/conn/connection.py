@@ -1,6 +1,7 @@
 from . import auth
 import sqlalchemy
 import pandas as pd
+import urllib
 
 class Connection:
 
@@ -42,7 +43,8 @@ class Connection:
                 self.server_name,
                 self.database_name
                 )
-            self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % conn_string)
+            params = urllib.parse.quote_plus(conn_string)
+            self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
 
         except Exception as e:
             print(e.args[0])
