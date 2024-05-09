@@ -7,14 +7,33 @@ class Connection:
     def __init__(self, database_name):
         try:
             self.database_name = database_name
-            self.create_engine()
+            self._create_engine()
         
         except Exception as e:
             print(e.args[0])
             raise
     
+    @property
+    def database_name(self):
+        try:
+            return self._database_name
 
-    def create_engine(self):
+        except Exception as e:
+            print(e.args[0])
+            raise
+
+    @database_name.setter
+    def database_name(self, value):
+        try:
+            if not isinstance(value, str):
+                raise ValueError("database_name must be a string")
+            self._database_name = value
+
+        except Exception as e:
+            print(e.args[0])
+            raise
+
+    def _create_engine(self):
         try:
             self.driver_name = 'ODBC Driver 17 for SQL Server'
             self.server_name = r'AWS-PROD-SQL\Sockeye'
@@ -25,11 +44,9 @@ class Connection:
                 )
             self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % conn_string)
 
-            
         except Exception as e:
             print(e.args[0])
             raise
-
 
     def get_query(self, sql):
         """Return a recordset defined by a SELECT query against a named database.

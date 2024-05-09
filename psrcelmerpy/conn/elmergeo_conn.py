@@ -11,7 +11,7 @@ class ElmerGeoConn(Connection):
         """
         try:
             self.database_name = 'ElmerGeo'
-            self.create_engine()
+            self._create_engine()
         
         except Exception as e:
             print(e.args[0])

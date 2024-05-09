@@ -4,6 +4,7 @@
 import psrcelmerpy
 from datetime import datetime
 import pandas as pd
+from pytest import raises
 
 def test_get_table():
     econn = psrcelmerpy.ElmerConn()
@@ -48,7 +49,7 @@ def test_build_recordset_sql():
                 "WHERE table_schema not in ('dbo', 'tSQLt', 'DBA', 'meta', 'stg')",
                 "AND t.TABLE_TYPE = 'view'")
     valid_query = " ".join(valid_query)
-    test_query = econn.build_recordset_sql()
+    test_query = econn._build_recordset_sql()
     assert valid_query == test_query  
     valid_query = f"{valid_query} AND t.TABLE_SCHEMA = 'someschema'"
     valid_query = ("SELECT t.TABLE_SCHEMA as [schema],",
@@ -59,5 +60,25 @@ def test_build_recordset_sql():
                 "AND t.TABLE_SCHEMA = 'someschema'",
                 "AND t.TABLE_TYPE = 'view'")
     valid_query = " ".join(valid_query)
-    test_query = econn.build_recordset_sql(schema_name='someschema')
+    test_query = econn._build_recordset_sql(schema_name='someschema')
     assert valid_query == test_query  
+
+def test_database_name_setter_error():
+    con = psrcelmerpy.ElmerConn()
+    with raises(ValueError) as exc_info:
+        con.database_name=1
+    assert str(exc_info.value) == "database_name must be a string"
+
+def test_stage_table():
+    econn = psrcelmerpy.ElmerConn()
+    sql = 'drop table if exists stg.test_stage_table'
+    econn.execute_sql(sql)
+    data = {'col_a': [1, 2, 3],
+            'col_b': ['a', 'b', 'c'],
+            'col_c': [1.1, 1.2, 1.3]}
+    df = pd.DataFrame(data)
+    econn.stage_table(df, 'test_stage_table')
+    df2 = econn.get_table('stg', 'test_stage_table')
+    assert len(df) == len(df2)
+    assert df.equals(df2)
+    econn.execute_sql(sql)
