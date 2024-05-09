@@ -67,7 +67,6 @@ class ElmerConn(Connection):
             The data frame to write to the database
         table_name : str
             The name that the new staging table is to have.
-        
         """
         try:
             engine = self.engine
