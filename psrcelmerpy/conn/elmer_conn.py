@@ -58,6 +58,17 @@ class ElmerConn(Connection):
             raise
 
     def stage_table(self, df, table_name):
+        """
+        Send a data frame to a new table in the database, in schema "stg"
+
+        Parameters
+        ----------
+        df : a data frame 
+            The data frame to write to the database
+        table_name : str
+            The name that the new staging table is to have.
+        
+        """
         try:
             engine = self.engine
             df.to_sql(name=table_name, schema='stg', con=engine, index=False)
