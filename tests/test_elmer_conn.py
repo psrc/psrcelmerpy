@@ -63,8 +63,22 @@ def test_build_recordset_sql():
     test_query = econn._build_recordset_sql(schema_name='someschema')
     assert valid_query == test_query  
 
-def test_elmer_conn_database_name_setter_error():
+def test_database_name_setter_error():
     con = psrcelmerpy.ElmerConn()
     with raises(ValueError) as exc_info:
         con.database_name=1
     assert str(exc_info.value) == "database_name must be a string"
+
+def test_stage_table():
+    econn = psrcelmerpy.ElmerConn()
+    sql = 'drop table if exists stg.test_stage_table'
+    econn.execute_sql(sql)
+    data = {'col_a': [1, 2, 3],
+            'col_b': ['a', 'b', 'c'],
+            'col_c': [1.1, 1.2, 1.3]}
+    df = pd.DataFrame(data)
+    econn.stage_table(df, 'test_stage_table')
+    df2 = econn.get_table('stg', 'test_stage_table')
+    assert len(df) == len(df2)
+    assert df.equals(df2)
+    econn.execute_sql(sql)

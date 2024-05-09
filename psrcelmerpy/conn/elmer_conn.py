@@ -56,3 +56,12 @@ class ElmerConn(Connection):
         except Exception as e:
             print("An error happened in list_recordsets(): {}".format(e.args[0]))
             raise
+
+    def stage_table(self, df, table_name):
+        try:
+            engine = self.engine
+            df.to_sql(name=table_name, schema='stg', con=engine, index=False)
+
+        except Exception as e:
+            print(e.args[0])
+            raise

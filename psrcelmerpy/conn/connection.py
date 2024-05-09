@@ -6,7 +6,7 @@ class Connection:
 
     def __init__(self, database_name):
         try:
-            self._database_name = database_name
+            self.database_name = database_name
             self._create_engine()
         
         except Exception as e:
@@ -44,11 +44,9 @@ class Connection:
                 )
             self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % conn_string)
 
-            
         except Exception as e:
             print(e.args[0])
             raise
-
 
     def get_query(self, sql):
         """Return a recordset defined by a SELECT query against a named database.
