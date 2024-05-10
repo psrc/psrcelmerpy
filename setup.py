@@ -11,7 +11,7 @@ setup(
     install_requires=['pandas',
                       #'scipy==1.10.1',
                       'pyodbc',
-                      'urllib',
+                      #'urllib',
                       'sqlalchemy',
                       'geopandas',
                       'shapely']
