@@ -65,7 +65,11 @@ class Connection:
 
         try:
             engine = self.engine
-            df = pd.read_sql(sql=sql, con=engine)
+            with engine.begin() as connection:
+                query = sqlalchemy.text(sql)
+                result = connection.execute(query)
+                df = pd.DataFrame(result.fetchall())
+                # df = pd.read_sql(sql=sql, con=engine)
             return(df)
         
         except Exception as e:
@@ -115,8 +119,10 @@ class Connection:
         try:
             engine = self.engine
             sql = "select * from {}.{}".format(schema, table_name)
-            print(sql)
-            df = self.get_query(sql)
+            query = sqlalchemy.text(sql)
+            with engine.begin() as connection:
+                result = connection.execute(query)
+                df = pd.DataFrame(result.fetchall())
             return(df)
         
         except Exception as e:
