@@ -256,7 +256,7 @@ class ElmerGeoConn(Connection):
             return(ret_str)
         
         except Exception as e:
-            print("An error happened in build_sql(): {}".format(e.args[0]))
+            print("An error happened in build_sql(): {}".format(str(e)))
             raise
 
 
