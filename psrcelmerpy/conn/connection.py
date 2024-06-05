@@ -43,6 +43,7 @@ class Connection:
                 self.server_name,
                 self.database_name
                 )
+            print(f"conn_string = {conn_string}")
             params = urllib.parse.quote_plus(conn_string)
             self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
 
