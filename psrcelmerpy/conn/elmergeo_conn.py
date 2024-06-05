@@ -257,6 +257,8 @@ class ElmerGeoConn(Connection):
         
         except Exception as e:
             print("An error happened in build_sql(): {}".format(str(e)))
+            print(f"col_names_ns_sql: {col_name_ns_sql}")
+            print(f"s_col_name_sql: {s_col_name_sql}")
             raise
 
 
