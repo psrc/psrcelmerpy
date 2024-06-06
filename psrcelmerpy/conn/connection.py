@@ -43,7 +43,6 @@ class Connection:
                 self.server_name,
                 self.database_name
                 )
-            print(f"conn_string = {conn_string}")
             params = urllib.parse.quote_plus(conn_string)
             self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
 
@@ -70,6 +69,9 @@ class Connection:
                 query = sqlalchemy.text(sql)
                 result = connection.execute(query)
                 df = pd.DataFrame(result.fetchall())
+                df.columns = result.keys()
+                #colnames = list(df)
+                #print(f"df colnames for {sql}: {colnames}")
                 # df = pd.read_sql(sql=sql, con=engine)
             return(df)
         
