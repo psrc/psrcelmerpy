@@ -237,7 +237,7 @@ class ElmerGeoConn(Connection):
             col_name_ns_sql = ' '.join(col_name_ns_sql)
             col_df = self.get_query(col_name_ns_sql)
             col_names_ns = ', '.join(col_df['COLUMN_NAME'])
-            s_col_name_sql = ("select c.COLUMN_NAME + '.STAsText() as Shape' as Column_Name",
+            s_col_name_sql = ("select c.COLUMN_NAME + '.STAsText() as Shape' as COLUMN_NAME "
                     "from INFORMATION_SCHEMA.COLUMNS c",
                     "where c.TABLE_SCHEMA = '{}'".format(schema_name),
                         "and c.TABLE_NAME = '{}'".format(tbl_name),
@@ -246,7 +246,7 @@ class ElmerGeoConn(Connection):
                         )
             s_col_name_sql = ' '.join(s_col_name_sql)
             s_col_df = self.get_query(s_col_name_sql)
-            col_names_s = ', '.join(s_col_df['Column_Name'])
+            col_names_s = ', '.join(s_col_df['COLUMN_NAME'])
             ret_str = "SELECT  {col_names_ns}, {col_names_s} FROM {schema_name}.{tbl_name}".format(
                 col_names_ns=col_names_ns,
                 col_names_s=col_names_s,
@@ -257,8 +257,6 @@ class ElmerGeoConn(Connection):
         
         except Exception as e:
             print("An error happened in build_sql(): {}".format(str(e)))
-            print(f"col_names_ns_sql: {col_name_ns_sql}")
-            print(f"s_col_name_sql: {s_col_name_sql}")
             raise
 
 
