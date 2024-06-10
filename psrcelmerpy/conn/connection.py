@@ -124,6 +124,7 @@ class Connection:
             with engine.begin() as connection:
                 result = connection.execute(query)
                 df = pd.DataFrame(result.fetchall())
+                df.columns = result.keys()
             return(df)
         
         except Exception as e:
