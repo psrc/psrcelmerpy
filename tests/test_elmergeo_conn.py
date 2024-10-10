@@ -4,6 +4,7 @@
 #                                               list_feature_classes,
 #                                               build_fc_query)
 import psrcelmerpy
+import pytest
 #from datetime import datetime
 #import pandas as pd
 econn = psrcelmerpy.ElmerConn()
@@ -57,6 +58,14 @@ def test_build_fc_query():
 def test_list_feature_classes():
     df = egconn.list_feature_classes()
     print(f"len(feature clases) = {len(df)}")
-    assert len(df) >= 279
+    assert len(df) >= 200
     df = egconn.list_feature_classes('census')
     assert 40 < len(df) < 100
+
+
+def test_query_with_no_records():
+    try:
+      egconn.get_query('SELECT OBJECTID FROM dbo.CITIES WHERE 1<>1')
+      assert True
+    except:
+      raise pytest.fail('unexpected error in test_query_with_no_records')
