@@ -69,14 +69,16 @@ class Connection:
                 query = sqlalchemy.text(sql)
                 result = connection.execute(query)
                 df = pd.DataFrame(result.fetchall())
-                df.columns = result.keys()
+                if len(df) > 0:
+                    df.columns = result.keys()
                 #colnames = list(df)
                 #print(f"df colnames for {sql}: {colnames}")
                 # df = pd.read_sql(sql=sql, con=engine)
             return(df)
         
         except Exception as e:
-            print("An error happened in get_query(): {}".format(e.args[0]))
+            print(f"An error happened in get_query(): {e.args[0]}")
+            print(f"The query passed in was: {sql}")
             raise
 
 
@@ -126,7 +128,8 @@ class Connection:
             with engine.begin() as connection:
                 result = connection.execute(query)
                 df = pd.DataFrame(result.fetchall())
-                df.columns = result.keys()
+                if len(df) > 0:
+                    df.columns = result.keys()
             return(df)
         
         except Exception as e:
