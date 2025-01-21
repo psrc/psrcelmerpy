@@ -11,6 +11,7 @@ class ElmerGeoConn(Connection):
         """
         try:
             self.database_name = 'ElmerGeo'
+            self.server_name = r'AWS-PROD-SQL\Sockeye'
             self._create_engine()
         
         except Exception as e:

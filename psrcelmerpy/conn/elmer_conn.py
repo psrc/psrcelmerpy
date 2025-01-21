@@ -9,6 +9,7 @@ class ElmerConn(Connection):
         """
         try:
             self.database_name = 'Elmer'
+            self.server_name = 'SQLserver'
             self._create_engine()
         
         except Exception as e:
