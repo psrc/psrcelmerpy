@@ -7,6 +7,11 @@ Install with:
 pip install git+https://github.com/psrc/psrcelmerpy.git
 ```
 
+If you had installed previously and need to update to the current version:
+```python
+pip install --force-reinstall git+https://github.com/psrc/psrcelmerpy.git
+```
+
 ## Examples
 
 ### Establish a connection to Elmer
