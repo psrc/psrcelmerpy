@@ -37,10 +37,6 @@ class Connection:
     def _create_engine(self):
         try:
             self.driver_name = 'ODBC Driver 17 for SQL Server'
-            # if self.database_name == 'Elmer':
-            #     self.server_name = r'SQLserver',
-            # else:
-            #     self.server_name = r'AWS-PROD-SQL\Sockeye'
             conn_string = "DRIVER={}; SERVER={}; DATABASE={}; trusted_connection=yes".format(
                 self.driver_name,
                 self.server_name,
