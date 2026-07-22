@@ -36,8 +36,8 @@ class Connection:
 
     def _create_engine(self):
         try:
-            self.driver_name = 'ODBC Driver 17 for SQL Server'
-            conn_string = "DRIVER={}; SERVER={}; DATABASE={}; trusted_connection=yes".format(
+            self.driver_name = 'ODBC Driver 18 for SQL Server'
+            conn_string = "DRIVER={}; SERVER={}; DATABASE={}; trusted_connection=yes; TrustServerCertificate=Yes".format(
                 self.driver_name,
                 self.server_name,
                 self.database_name
