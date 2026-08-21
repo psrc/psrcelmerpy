@@ -56,6 +56,9 @@ class Connection:
                 self.server_name,
                 self.database_name
                 )
+            # ODBC Driver 18 defaults to strict certificate validation, which breaks against PSRC's SQL Server
+            if self.driver_name == 'ODBC Driver 18 for SQL Server':
+                conn_string += "; TrustServerCertificate=yes"
             params = urllib.parse.quote_plus(conn_string)
             self.engine = sqlalchemy.create_engine("mssql+pyodbc:///?odbc_connect=%s" % params)
 
