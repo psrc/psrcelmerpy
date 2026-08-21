@@ -1,6 +1,7 @@
 from . import auth
 import sqlalchemy
 import pandas as pd
+import pyodbc
 import urllib
 
 class Connection:
@@ -36,7 +37,20 @@ class Connection:
 
     def _create_engine(self):
         try:
-            self.driver_name = 'ODBC Driver 17 for SQL Server'
+            supported_drivers = [
+                'ODBC Driver 18 for SQL Server',
+                'ODBC Driver 17 for SQL Server'
+            ]
+            installed_drivers = pyodbc.drivers()
+            self.driver_name = next(
+                (driver for driver in supported_drivers if driver in installed_drivers),
+                None
+            )
+            if self.driver_name is None:
+                raise RuntimeError(
+                    'Neither ODBC Driver 18 for SQL Server nor '
+                    'ODBC Driver 17 for SQL Server is installed'
+                )
             conn_string = "DRIVER={}; SERVER={}; DATABASE={}; trusted_connection=yes".format(
                 self.driver_name,
                 self.server_name,
